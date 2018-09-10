@@ -1,0 +1,39 @@
+plugins {
+    id "jaci.openrio.gradle.GradleRIO" version "2018.03.06" apply false
+    id "jaci.gradle.EmbeddedTools" version "2018.02.04" apply false
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+
+    apply plugin: 'idea'
+
+    version = '1.8'
+}
+
+subprojects {
+    apply plugin: 'jaci.openrio.gradle.GradleRIO'
+    apply plugin: 'maven-publish'
+    plugins.withType(CPlugin).whenPluginAdded {
+        project.apply plugin: "visual-studio"
+    }
+
+    publishing {
+        repositories {
+            maven {
+                def pwdfile = file(java.nio.file.Paths.get(System.getProperty('user.home')).resolve('imjacinta.maven.cred'))
+                if (pwdfile.exists() && !project.hasProperty('mavenlocal')) {
+                    url("sftp://imjac.in:22/home/maven/public")
+                    credentials {
+                        username 'maven'
+                        password pwdfile.text
+                    }
+                } else {
+                    url("${project.buildDir}/repo")
+                }
+            }
+        }
+    }
+}

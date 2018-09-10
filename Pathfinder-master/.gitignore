@@ -1,0 +1,41 @@
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+Pathfinder-Java/build/
+Pathfinder-Java/out/
+Pathfinder-Java/src/test/
+*.csv
+Pathfinder-Java/.gradle/
+Pathfinder-Core/build/
+test/build
+.gradle/
+out/
+.idea
+
+.vscode/
+
+#LabVIEW files
+*.lvlps
+
+*.aliases
+
+*.iml
+*.ipr
+*.iws

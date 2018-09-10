@@ -14,7 +14,7 @@ public class Main {
     static Waypoint[] waypoints = new Waypoint[]{
             new Waypoint(0 ,0,0),
             new Waypoint(4, 0, 0),
-            new Waypoint(8, 4, 90)
+            new Waypoint(8, 4, Math.toRadians(90.0))
     };
     public static void main(String[] args){
         Trajectory traj = Pathfinder.generate(waypoints, new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, .02, 4, 10, 60));
@@ -37,28 +37,28 @@ public class Main {
             double newY = current.getY() + y;
             double newTheta = current.getTheta() + heading;
 
-            System.out.println("New X: " + newX + " New Y: " + newY + " New Heading: " + newTheta);
+            System.out.println("New X: " + newX + " New Y: " + newY + " New Heading: " + Math.toDegrees(newTheta));
             robotPos.add(new Odometry(newX, newY, newTheta));
             odometryIdx++;
         }
-
-        System.out.println(System.getProperty("user.dir"));
-        File trajLoc = new File(System.getProperty("user.dir") + "\\out\\path.csv");
-        File robotLoc = new File(System.getProperty("user.dir") + "\\out\\robot.csv");
-        try {
-            PrintWriter pw = new PrintWriter(robotLoc);
-            StringBuilder writer = new StringBuilder();
-            writer.append("x,y,heading");
-            writer.append("\n");
-            for(Odometry odo: robotPos){
-                writer.append(odo.getX() + "," + odo.getY() + "," + odo.getTheta() + "\n");
-            }
-            pw.write(writer.toString());
-            pw.close();
-        }catch(Exception e){
-            System.out.println("ya done goofed");
-        }
-        Pathfinder.writeToCSV(trajLoc, traj);
+//
+//        System.out.println(System.getProperty("user.dir"));
+//        File trajLoc = new File(System.getProperty("user.dir") + "\\out\\path.csv");
+//        File robotLoc = new File(System.getProperty("user.dir") + "\\out\\robot.csv");
+//        try {
+//            PrintWriter pw = new PrintWriter(robotLoc);
+//            StringBuilder writer = new StringBuilder();
+//            writer.append("x,y,heading");
+//            writer.append("\n");
+//            for(Odometry odo: robotPos){
+//                writer.append(odo.getX() + "," + odo.getY() + "," + odo.getTheta() + "\n");
+//            }
+//            pw.write(writer.toString());
+//            pw.close();
+//        }catch(Exception e){
+//            System.out.println("ya done goofed");
+//        }
+//        Pathfinder.writeToCSV(trajLoc, traj);
 
 
     }

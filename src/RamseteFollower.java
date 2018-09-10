@@ -8,14 +8,13 @@ import jaci.pathfinder.Trajectory.Segment;
 
 public class RamseteFollower {
 
-    private static final double b = 2; // greater than zero; increases correction
-    private static final double zeta = 0.2; // between zero and one; increases dampening
+    private static final double b = 2.3;                // greater than zero; increases correction
+    private static final double zeta = 0.4;             // between zero and one; increases dampening
     private double wheelBase;
     private int segmentIndex;
-    private Trajectory path;    //this is the path that we will follow
-    private Odometry odo;       //this is the robot's x and y position, as well as its heading
+    private Trajectory path;                            //this is the path that we will follow
+    private Odometry odo;                               //this is the robot's x and y position, as well as its heading
 
-    //where v = linear velocity (feet/s) and w = angular velocity (rad/s)
     public RamseteFollower(double wheelBase, Trajectory path) {
         System.out.println("Initializing Ramsete Follower");
         this.wheelBase = wheelBase;
@@ -40,21 +39,19 @@ public class RamseteFollower {
         }
         System.out.println("Getting segment segmentIndex number: " + segmentIndex + " out of " + (path.length()-1) + " segments");
 
-        Segment current = path.get(segmentIndex);   //look at segment of path
-        double w_d = calcW_d();   //need to find wanted rate of change of heading
+        Segment current = path.get(segmentIndex);                                                   //look at segment of path
+        double w_d = calcW_d();                                                                     //need to find wanted rate of change of heading
 
-        double v = calcVel(current.x, current.y, current.heading, current.velocity, w_d);
-        double w = calcAngleVel(current.x, current.y, current.heading, current.velocity, w_d);
+        double v = calcVel(current.x, current.y, current.heading, current.velocity, w_d);           //v = linear velocity
+        double w = calcAngleVel(current.x, current.y, current.heading, current.velocity, w_d);      //w = angular velocity
 
         System.out.println("Velocity " + v + " Angular Velocity " + w);
 
-        left = (-wheelBase * w) / 2 + v;  //do math to convert angular velocity + linear velocity into left and right wheel speeds (fps)
-        right = (+wheelBase * w) / 2 + v;
+        left = (-wheelBase * w) / 2 + v;                                                            //do math to convert angular velocity + linear velocity
+        right = (+wheelBase * w) / 2 + v;                                                           //into left and right wheel speeds (fps)
 
 
         System.out.println("Left: " + left + " Right: " + right);
-        //left *= -1; //robot was going backwards...? dunno why
-        //right *= -1;
         segmentIndex++;
         return new DriveSignal(left, right);
     }

@@ -8,8 +8,8 @@ import jaci.pathfinder.Trajectory.Segment;
 
 public class RamseteFollower {
 
-    private static final double b = 0.2; // greater than zero; increases correction
-    private static final double zeta = 0.9; // between zero and one; increases dampening
+    private static final double b = 2; // greater than zero; increases correction
+    private static final double zeta = 0.2; // between zero and one; increases dampening
     private double k, v, w, w_d, wheelBase;
     private int segmentIndex;
     private Trajectory path;    //this is the path that we will follow
@@ -78,7 +78,7 @@ public class RamseteFollower {
         else
             sinThetaErrOverThetaErr = Math.sin(theta_d - odo.getTheta()) / (thetaError);
         double calcW = w_d + b * v_d * (sinThetaErrOverThetaErr) * (Math.cos(odo.getTheta()) * (y_d - odo.getY()) - Math.sin(odo.getTheta()) * (x_d - odo.getX())) + k * (thetaError); //from eq. 5.12
-        w = calcW % (Math.PI); // bind it! [-2pi, 2pi]
+        w = calcW % (Math.PI/2); // bind it! [-2pi, 2pi]
     }
 
     private void calcK(double v_d, double w_d) {

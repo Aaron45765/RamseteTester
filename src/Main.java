@@ -26,12 +26,12 @@ public class Main {
             Odometry current = robotPos.get(odometryIdx);
             follower.setOdometry(current);
             driveSignal = follower.getNextDriveSignal();
-            double w = (driveSignal.getLeft() - driveSignal.getRight()) / 2.166666;
+            double w = (-driveSignal.getLeft() + driveSignal.getRight()) / 2.166666;
             double v = (driveSignal.getLeft() + driveSignal.getRight()) / 2;
             double heading = w * .02;
             double pos = v * .02;
-            double x = pos * Math.cos(heading);
-            double y = pos * Math.sin(heading);
+            double x = pos * Math.cos(current.getTheta() + heading);
+            double y = pos * Math.sin(current.getTheta() + heading);
 
             double newX = current.getX() + x;
             double newY = current.getY() + y;

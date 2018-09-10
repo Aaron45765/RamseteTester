@@ -14,7 +14,7 @@ public class Main {
     static Waypoint[] waypoints = new Waypoint[]{
             new Waypoint(0 ,0,0),
             new Waypoint(4, 0, 0),
-            new Waypoint(8, 4, Math.toDegrees(90.0))
+            new Waypoint(8, 4, Math.toRadians(90.0))
     };
     public static void main(String[] args){
         Trajectory traj = Pathfinder.generate(waypoints, new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, .02, 4, 10, 60));

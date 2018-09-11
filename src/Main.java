@@ -35,7 +35,7 @@ public class Main {
             driveSignal = follower.getNextDriveSignal();
             double w = (-driveSignal.getLeft() + driveSignal.getRight()) / 2.166666;
             double v = (driveSignal.getLeft() + driveSignal.getRight()) / 2;
-            double dt = .02 * spicyRandomness(0.9, 1.1);
+            double dt = .02 * spicyRandomness(1.0, 1.0);
             double heading = w * dt;
             double pos = v * dt;
             double x = pos * Math.cos(current.getTheta() + heading);
